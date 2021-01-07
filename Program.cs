@@ -16,7 +16,7 @@ namespace AllCardsOnDeck
             {
               "Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"
             };
-            var cardDeckList = new List<string>() { };
+            var cardDeckList = new List<string>();
 
             foreach (var suit in listOfSuits)
             {
@@ -26,11 +26,17 @@ namespace AllCardsOnDeck
                 }
             }
 
+            foreach (var card in cardDeckList)
+            {
+                Console.WriteLine(card);
+            }
+
             var cardDeckListValues = new List<int>(){
             14, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
             14, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
             14, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
             14, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,};
+
 
             var lastUnmovedCardPosition = cardDeckList.Count;
             var randomNumber = 0;
@@ -86,32 +92,33 @@ namespace AllCardsOnDeck
             Console.WriteLine("Decks have been seperated");
             Console.WriteLine("Prepare for battle!");
 
-            while ((playerOneWarDeckValues.Count != 0) || (playerTwoWarDeckValues.Count != 0))
+
+            for (var currentCardInHand = 0; currentCardInHand < losingDeckSize; currentCardInHand++)
             {
-                for (var currentCardInHand = 0; currentCardInHand < losingDeckSize; currentCardInHand++)
+                if ((playerOneWarDeckValues[currentCardInHand] > playerTwoWarDeckValues[currentCardInHand]) && (playerTwoWarDeckValues.Count != 0))
                 {
-                    if ((playerOneWarDeckValues[currentCardInHand] > playerTwoWarDeckValues[currentCardInHand]) && (playerTwoWarDeckValues.Count != 0))
+                    playerOneWarDeck.Add(playerTwoWarDeck[currentCardInHand]);
+                    playerTwoWarDeck.Remove(playerTwoWarDeck[currentCardInHand]);
+                    playerOneWarDeckValues.Add(playerOneWarDeckValues[currentCardInHand]);
+                    playerTwoWarDeckValues.Remove(playerTwoWarDeckValues[currentCardInHand]);
+                    Console.WriteLine($"Player 2 lost the {playerTwoWarDeck[currentCardInHand]} to the {playerOneWarDeck[currentCardInHand]}");
+                }
+                else if ((playerOneWarDeckValues[currentCardInHand] < playerTwoWarDeckValues[currentCardInHand]) && (playerOneWarDeckValues.Count != 0))
+                {
+                    playerTwoWarDeck.Add(playerOneWarDeck[currentCardInHand]);
+                    playerOneWarDeck.Remove(playerOneWarDeck[currentCardInHand]);
+                    playerTwoWarDeckValues.Add(playerTwoWarDeckValues[currentCardInHand]);
+                    playerOneWarDeckValues.Remove(playerOneWarDeckValues[currentCardInHand]);
+                    Console.WriteLine($"Player 1 lost the {playerOneWarDeck[currentCardInHand]} to the {playerTwoWarDeck[currentCardInHand]}");
+                }
+                else
+                {
+                    Console.WriteLine("War!");
+                    var battleGround = new List<string>() { };
+                    var battleGroundValues = new List<int>() { };
+                    do
                     {
-                        playerOneWarDeck.Add(playerTwoWarDeck[currentCardInHand]);
-                        playerTwoWarDeck.Remove(playerTwoWarDeck[currentCardInHand]);
-                        playerOneWarDeckValues.Add(playerOneWarDeckValues[currentCardInHand]);
-                        playerTwoWarDeckValues.Remove(playerTwoWarDeckValues[currentCardInHand]);
-                        Console.WriteLine($"Player 2 lost the {playerTwoWarDeck[currentCardInHand]} to the {playerOneWarDeck[currentCardInHand]}");
-                    }
-                    else if ((playerOneWarDeckValues[currentCardInHand] < playerTwoWarDeckValues[currentCardInHand]) && (playerOneWarDeckValues.Count != 0))
-                    {
-                        playerTwoWarDeck.Add(playerOneWarDeck[currentCardInHand]);
-                        playerOneWarDeck.Remove(playerOneWarDeck[currentCardInHand]);
-                        playerTwoWarDeckValues.Add(playerTwoWarDeckValues[currentCardInHand]);
-                        playerOneWarDeckValues.Remove(playerOneWarDeckValues[currentCardInHand]);
-                        Console.WriteLine($"Player 1 lost the {playerOneWarDeck[currentCardInHand]} to the {playerTwoWarDeck[currentCardInHand]}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("War!");
-                        var battleGround = new List<string>() { };
-                        var battleGroundValues = new List<int>() { };
-                        do
+                        if ((playerOneWarDeckValues.Count != 0) || (playerTwoWarDeckValues.Count != 0))
                         {
                             battleGround.Add(playerOneWarDeck[currentCardInHand]);
                             battleGround.Add(playerTwoWarDeck[currentCardInHand]);
@@ -121,52 +128,53 @@ namespace AllCardsOnDeck
                             battleGroundValues.Add(playerTwoWarDeckValues[currentCardInHand]);
                             playerOneWarDeckValues.Remove(playerOneWarDeckValues[currentCardInHand]);
                             playerTwoWarDeckValues.Remove(playerTwoWarDeckValues[currentCardInHand]);
-                            currentCardInHand--;
+                            currentCardInHand++;
                             Console.WriteLine("The battle rages on!");
                         }
-                        while ((playerOneWarDeckValues[currentCardInHand] == playerTwoWarDeckValues[currentCardInHand]) && ((playerOneWarDeckValues.Count != 0) || (playerTwoWarDeckValues.Count != 0)));
+                    }
+                    while (playerOneWarDeckValues[currentCardInHand] == playerTwoWarDeckValues[currentCardInHand]);
 
-                        Console.WriteLine("The victor has risen");
+                    Console.WriteLine("The victor has risen");
 
-                        for (var warLength = battleGround.Count - 1; warLength > 0; warLength--)
-                        {
-                            if (playerOneWarDeckValues[currentCardInHand] > playerTwoWarDeckValues[currentCardInHand])
-                            {
-                                playerOneWarDeck.Add(battleGround[warLength]);
-                                playerOneWarDeckValues.Add(battleGroundValues[warLength]);
-                                Console.WriteLine("Adding cards to the victor's deck");
-                            }
-                            else
-                            {
-                                playerTwoWarDeck.Add(battleGround[warLength]);
-                                playerTwoWarDeckValues.Add(battleGroundValues[warLength]);
-                                Console.WriteLine("Adding cards to the victor's deck");
-                            }
-                        }
-
+                    for (var warLength = battleGround.Count - 1; warLength > 0; warLength--)
+                    {
                         if (playerOneWarDeckValues[currentCardInHand] > playerTwoWarDeckValues[currentCardInHand])
                         {
-                            Console.WriteLine("Player 1 won the battle!");
+                            playerOneWarDeck.Add(battleGround[warLength]);
+                            playerOneWarDeckValues.Add(battleGroundValues[warLength]);
+                            Console.WriteLine("Adding cards to the victor's deck");
                         }
                         else
                         {
-                            Console.WriteLine("Player 2 won the battle!");
+                            playerTwoWarDeck.Add(battleGround[warLength]);
+                            playerTwoWarDeckValues.Add(battleGroundValues[warLength]);
+                            Console.WriteLine("Adding cards to the victor's deck");
                         }
                     }
 
-                    if (playerOneWarDeckValues.Count >= playerTwoWarDeckValues.Count)
+                    if (playerOneWarDeckValues[currentCardInHand] > playerTwoWarDeckValues[currentCardInHand])
                     {
-                        winningDeckSize = playerOneWarDeckValues.Count;
-                        losingDeckSize = playerTwoWarDeckValues.Count;
+                        Console.WriteLine("Player 1 won the battle!");
                     }
                     else
                     {
-                        winningDeckSize = playerTwoWarDeckValues.Count;
-                        losingDeckSize = playerOneWarDeckValues.Count;
+                        Console.WriteLine("Player 2 won the battle!");
                     }
                 }
+
+                if (playerOneWarDeckValues.Count >= playerTwoWarDeckValues.Count)
+                {
+                    winningDeckSize = playerOneWarDeckValues.Count;
+                    losingDeckSize = playerTwoWarDeckValues.Count;
+                }
+                else
+                {
+                    winningDeckSize = playerTwoWarDeckValues.Count;
+                    losingDeckSize = playerOneWarDeckValues.Count;
+                }
             }
-            if (playerOneWarDeckValues.Count == 0)
+
+            if (playerOneWarDeckValues.Count <= 1)
             {
                 Console.WriteLine("Player Two Won the War!!!");
             }
