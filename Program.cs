@@ -18,9 +18,9 @@ namespace AllCardsOnDeck
             };
             var cardDeckList = new List<string>() { };
 
-            foreach (var rank in listOfRanks)
+            foreach (var suit in listOfSuits)
             {
-                foreach (var suit in listOfSuits)
+                foreach (var rank in listOfRanks)
                 {
                     cardDeckList.Add(rank + suit);
                 }
