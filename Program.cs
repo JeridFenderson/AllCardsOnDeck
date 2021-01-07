@@ -7,22 +7,24 @@ namespace AllCardsOnDeck
     {
         static void Main(string[] args)
         {
-            var cardDeckList = new List<string>() {
-            "Ace of Spades", "2 of Spades", "3 of Spades", "4 of Spades",
-            "5 of Spades", "6 of Spades", "7 of Spades", "8 of Spades", "9 of Spades",
-            "10 of Spades", "Jack of Spades", "Queen of Spades", "King of Spades",
 
-            "Ace of Clubs", "2 of Clubs", "3 of Clubs", "4 of Clubs",
-            "5 of Clubs", "6 of Clubs", "7 of Clubs", "8 of Clubs", "9 of Clubs",
-            "10 of Clubs", "Jack of Clubs", "Queen of Clubs", "King of Clubs",
+            var listOfSuits = new List<string>()
+            {
+              " of Spades", " of Clubs", " of Hearts", " of Diamonds"
+            };
+            var listOfRanks = new List<string>()
+            {
+              "Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"
+            };
+            var cardDeckList = new List<string>() { };
 
-            "Ace of Hearts", "2 of Hearts", "3 of Hearts", "4 of Hearts",
-            "5 of Hearts", "6 of Hearts", "7 of Hearts", "8 of Hearts", "9 of Hearts",
-            "10 of Hearts", "Jack of Hearts", "Queen of Hearts", "King of Hearts",
-
-            "Ace of Diamonds", "2 of Diamonds", "3 of Diamonds", "4 of Diamonds",
-            "5 of Diamonds", "6 of Diamonds", "7 of Diamonds", "8 of Diamonds", "9 of Diamonds",
-            "10 of Diamonds", "Jack of Diamonds", "Queen of Diamonds", "King of Diamonds"};
+            foreach (var rank in listOfRanks)
+            {
+                foreach (var suit in listOfSuits)
+                {
+                    cardDeckList.Add(rank + suit);
+                }
+            }
 
             var cardDeckListValues = new List<int>(){
             14, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
