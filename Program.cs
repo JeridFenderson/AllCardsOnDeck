@@ -64,9 +64,6 @@ namespace AllCardsOnDeck
             Console.WriteLine($"Player 2 received a {playerTwosHand[0]} and a {playerTwosHand[1]}");
 
             // Epic mode
-            var winningDeckSize = cardDeckList.Count;
-            var losingDeckSize = 10;
-
             var playerOneWarDeck = new List<string>() { };
             var playerTwoWarDeck = new List<string>() { };
             var playerOneWarDeckValues = new List<int>() { };
@@ -74,7 +71,7 @@ namespace AllCardsOnDeck
 
             Console.WriteLine("War is beginning soon!");
 
-            for (var i = 0; i < winningDeckSize; i++)
+            for (var i = 0; i < cardDeckList.Count; i++)
             {
                 playerOneWarDeck.Add(cardDeckList[i]);
                 playerOneWarDeckValues.Add(cardDeckListValues[i]);
@@ -82,12 +79,14 @@ namespace AllCardsOnDeck
                 playerTwoWarDeck.Add(cardDeckList[i]);
                 playerTwoWarDeckValues.Add(cardDeckListValues[i]);
             }
+            var winningDeckSize = playerOneWarDeck.Count;
+            var losingDeckSize = playerTwoWarDeck.Count;
             Console.WriteLine("Decks have been seperated");
             Console.WriteLine("Prepare for battle!");
 
             while ((playerOneWarDeckValues.Count != 0) || (playerTwoWarDeckValues.Count != 0))
             {
-                for (var currentCardInHand = 0; currentCardInHand < (losingDeckSize - 1); currentCardInHand++)
+                for (var currentCardInHand = 0; currentCardInHand < losingDeckSize; currentCardInHand++)
                 {
                     if ((playerOneWarDeckValues[currentCardInHand] > playerTwoWarDeckValues[currentCardInHand]) && (playerTwoWarDeckValues.Count != 0))
                     {
